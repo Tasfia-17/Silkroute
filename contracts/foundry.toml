@@ -1,0 +1,20 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+solc = "0.8.24"
+optimizer = true
+optimizer_runs = 200
+via_ir = true
+remappings = [
+  "@openzeppelin/=lib/openzeppelin-contracts/",
+  "forge-std/=lib/forge-std/src/"
+]
+
+[rpc_endpoints]
+conflux_testnet = "https://evmtestnet.confluxrpc.com"
+conflux_mainnet = "https://evm.confluxrpc.com"
+
+[etherscan]
+conflux_testnet = { key = "${CONFLUXSCAN_API_KEY}", url = "https://evmtestnet.confluxscan.org/api" }
+conflux_mainnet = { key = "${CONFLUXSCAN_API_KEY}", url = "https://evm.confluxscan.org/api" }
