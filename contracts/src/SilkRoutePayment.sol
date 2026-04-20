@@ -226,10 +226,11 @@ contract SilkRoutePayment is Ownable, ReentrancyGuard {
     }
 
     function withdrawFees(address token) external onlyOwner {
-        uint256 balance = IERC20(token).balanceOf(address(this));
-        require(balance > 0, "NOTHING_TO_WITHDRAW");
-        IERC20(token).safeTransfer(treasury, balance);
-        emit FeesWithdrawn(token, balance);
+        require(totalFeesCollected > 0, "NOTHING_TO_WITHDRAW");
+        uint256 amount = totalFeesCollected;
+        totalFeesCollected = 0;
+        IERC20(token).safeTransfer(treasury, amount);
+        emit FeesWithdrawn(token, amount);
     }
 
     function withdrawEth() external onlyOwner {
@@ -306,7 +307,7 @@ contract SilkRoutePayment is Ownable, ReentrancyGuard {
         totalFeesCollected += fee;
 
         // Approve Swappi router
-        IERC20(tokenIn).approve(address(swappiRouter), amountAfterFee);
+        IERC20(tokenIn).safeIncreaseAllowance(address(swappiRouter), amountAfterFee);
 
         address[] memory path = new address[](2);
         path[0] = tokenIn;
