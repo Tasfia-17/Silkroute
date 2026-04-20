@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowRight, CheckCircle, Clock, ChevronDown, ChevronUp, ExternalLink, Brain } from 'lucide-react'
+import { ArrowRight, CheckCircle, Clock, ChevronDown, ChevronUp, ExternalLink, Brain, History } from 'lucide-react'
 import type { Payment } from '../../lib/types'
 import { formatAmount, shortenAddress } from '../../lib/utils'
 
@@ -16,7 +16,17 @@ function tokenSymbol(addr: string): string {
 
 function tokenFlag(addr: string): string {
   const sym = tokenSymbol(addr)
-  return sym === 'USDT0' ? '🇺🇸' : '🇨🇳'
+  return sym === 'USDT0' ? 'USD' : 'CNH'
+}
+
+function TokenBadge({ addr }: { addr: string }) {
+  const sym = tokenSymbol(addr)
+  const isUSD = sym === 'USDT0'
+  return (
+    <span className={`text-xs font-bold px-1.5 py-0.5 rounded ${isUSD ? 'bg-emerald-500/20 text-emerald-400' : 'bg-red-500/20 text-red-400'}`}>
+      {sym}
+    </span>
+  )
 }
 
 type Props = {
@@ -47,9 +57,9 @@ function PaymentRow({ payment }: { payment: Payment }) {
 
         {/* Currency flow */}
         <div className="flex items-center gap-2 flex-1 min-w-0">
-          <span className="text-base">{tokenFlag(payment.tokenIn)}</span>
+          <TokenBadge addr={payment.tokenIn} />
           <div className="min-w-0">
-            <p className="text-sm font-semibold text-white">
+            <p className="text-sm font-semibold text-white tabular-nums">
               {formatAmount(payment.amountIn, 6)} {tokenSymbol(payment.tokenIn)}
             </p>
             <p className="text-xs text-slate-500">from {shortenAddress(payment.sender)}</p>
@@ -57,10 +67,10 @@ function PaymentRow({ payment }: { payment: Payment }) {
 
           {!isSameToken && (
             <>
-              <ArrowRight size={14} className="text-violet-400 shrink-0" />
-              <span className="text-base">{tokenFlag(payment.tokenOut)}</span>
+              <ArrowRight size={13} className="text-violet-400 shrink-0" />
+              <TokenBadge addr={payment.tokenOut} />
               <div className="min-w-0">
-                <p className="text-sm font-semibold text-white">
+                <p className="text-sm font-semibold text-white tabular-nums">
                   {formatAmount(payment.amountOut, 6)} {tokenSymbol(payment.tokenOut)}
                 </p>
                 <p className="text-xs text-slate-500">to {shortenAddress(payment.recipient)}</p>
@@ -69,7 +79,7 @@ function PaymentRow({ payment }: { payment: Payment }) {
           )}
           {isSameToken && (
             <div className="min-w-0">
-              <p className="text-xs text-slate-500">→ {shortenAddress(payment.recipient)}</p>
+              <p className="text-xs text-slate-500">to {shortenAddress(payment.recipient)}</p>
             </div>
           )}
         </div>
@@ -165,9 +175,11 @@ export function PaymentHistory({ payments, loading }: Props) {
 
   if (payments.length === 0) {
     return (
-      <div className="card p-8 text-center">
-        <p className="text-4xl mb-3">🏮</p>
-        <p className="text-slate-400 text-sm">No payments yet</p>
+      <div className="card p-10 text-center">
+        <div className="w-12 h-12 rounded-2xl bg-white/[0.04] border border-white/[0.07] flex items-center justify-center mx-auto mb-4">
+          <History size={20} className="text-slate-600" />
+        </div>
+        <p className="text-slate-400 text-sm font-medium">No payments yet</p>
         <p className="text-slate-600 text-xs mt-1">Your payment history will appear here</p>
       </div>
     )

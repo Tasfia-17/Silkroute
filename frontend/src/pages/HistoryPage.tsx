@@ -81,8 +81,8 @@ export function HistoryPage({ onBack }: Props) {
               { label: 'Total Fees', value: '$1.80', color: 'text-emerald-400' },
               { label: 'SWIFT Savings', value: '$19.20', color: 'text-violet-400' },
             ].map(s => (
-              <div key={s.label} className="card p-3 text-center">
-                <p className={`text-lg font-bold ${s.color}`}>{s.value}</p>
+              <div key={s.label} className="glass p-3 text-center">
+                <p className={`text-lg font-bold tabular-nums ${s.color}`}>{s.value}</p>
                 <p className="text-xs text-slate-500 mt-0.5">{s.label}</p>
               </div>
             ))}
