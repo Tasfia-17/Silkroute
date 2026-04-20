@@ -95,11 +95,11 @@ SilkRoute is an AI-powered cross-border payment protocol on Conflux eSpace that 
 
 | Contract | Address |
 |----------|---------|
-| `SilkRoutePayment` | `TBD — deploy with instructions below` |
-| `MockUSDT0` | `TBD` |
-| `MockAxCNH` | `TBD` |
-| `MockPyth` | `TBD` |
-| `MockSwappiRouter` | `TBD` |
+| `SilkRoutePayment` | `0x11AADF85Af1c926d5395C4CEa04DBE68B03BdF60` |
+| `MockUSDT0` | `0x3EBA12Fbb3d7F5248502aD2c9696a78194beAd21` |
+| `MockAxCNH` | `0xeD681263EBE64124114e1549FbB24b4EF94258E2` |
+| `MockPyth` | `0x2a24666769A823ec062200A43623e9e1150AcFb8` |
+| `MockSwappiRouter` | `0xdE5437b0200b3C7C7e35362DAD0B81875742a6C3` |
 
 ### Conflux eSpace Mainnet (Chain ID: 1030)
 
